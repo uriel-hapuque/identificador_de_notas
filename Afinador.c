@@ -8,8 +8,6 @@
 
 // Definições de hardware
 #define ADC_PIN 28       // Pino GPIO28 conectado ao microfone
-#define RED_LED 13       // LED vermelho no GPIO13
-#define BLUE_LED 12      // LED azul no GPIO12
 #define SAMPLE_RATE 8000 // Taxa de amostragem de 8 kHz
 #define FFT_SIZE 512     // Tamanho da FFT (potência de 2)
 
@@ -24,8 +22,6 @@
 // Variáveis globais
 ssd1306_t ssd;                // Estrutura de controle do display
 bool cor = true;              // Variável para controle de cores do display
-const uint limiar_1 = 2080;   // Limiar inferior para ativação do LED
-const uint limiar_2 = 2200;   // Limiar superior para ativação do LED
 
 // Função de configuração do ADC
 void setup_adc() {
@@ -48,16 +44,8 @@ void display_init(){
     ssd1306_send_data(&ssd);        // Envia dados para o display
 
     // Limpa o display. O display inicia com todos os pixels apagados.
-  ssd1306_fill(&ssd, false);
-  ssd1306_send_data(&ssd);
-}
-
-// Função de configuração dos GPIOs dos LEDs
-void gpio_setup(){
-    gpio_init(RED_LED);            // Inicializa pino do LED vermelho
-    gpio_set_dir(RED_LED, GPIO_OUT); // Configura como saída
-    gpio_init(BLUE_LED);           // Inicializa pino do LED azul
-    gpio_set_dir(BLUE_LED, GPIO_OUT); // Configura como saída
+    ssd1306_fill(&ssd, false);
+    ssd1306_send_data(&ssd);
 }
 
 // Função para capturar amostras do ADC
@@ -113,7 +101,6 @@ int main() {
     stdio_init_all();              // Inicializa todas as funcionalidades I/O
     setup_adc();                   // Configura ADC
     display_init();                // Inicializa display
-    gpio_setup();                  // Configura LEDs
     
     // Variáveis para processamento de FFT
     float samples[FFT_SIZE];       // Buffer para armazenar amostras
@@ -161,21 +148,7 @@ int main() {
         printf("Frequência detectada: %.2f Hz -> Nota: %s\n", freq, note); // Log via serial
 
         sleep_ms(300); // Intervalo entre atualizações
-
-        // Controle dos LEDs baseado na leitura do ADC
-        uint adc_val = adc_read(); // Lê valor atual do ADC
-        if(adc_val > limiar_1 && adc_val < limiar_2) {
-            gpio_put(RED_LED, 1);  // Acende LED vermelho
-            gpio_put(BLUE_LED, 0);
-        } else if(adc_val > limiar_2) {
-            gpio_put(RED_LED, 0);
-            gpio_put(BLUE_LED, 1); // Acende LED azul
-        } else {
-            gpio_put(RED_LED, 0);  // Apaga ambos LEDs
-            gpio_put(BLUE_LED, 0);
-        }
     }
     
-    kiss_fftr_free(cfg); // Libera recursos da FFT (nunca executado devido ao loop infinito)
     return 0;
 }
