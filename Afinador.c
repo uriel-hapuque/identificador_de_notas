@@ -58,7 +58,7 @@ void capture_samples(float *samples) {
 
 // Função para encontrar a nota mais próxima da frequência detectada
 const char *find_closest_note(float freq) {
-    static const char *NOTES[] = {"La", "La sustenido ", "Si", "Do sustenido ", "Do", 
+    static const char *NOTES[] = {"La", "La sustenido ", "Si", "Do ", "Do sustenido ", 
         "Re", "Re sustenido ", "Mi", "Fa", "Fa sustenido ", 
         "Sol", "Sol sustenido "};
     static char note_str[16];
