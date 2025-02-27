@@ -6,7 +6,7 @@ Este projeto utiliza um Raspberry Pi Pico para capturar sinais de áudio, proces
  ```
 git clone https://github.com/mborgerding/kissfft
 ```
-
+### Após adicionar a biblioteca Recarregue a janela do IDE e compile o projeto.
 \
 \
 \
