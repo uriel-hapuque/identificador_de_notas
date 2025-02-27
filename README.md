@@ -6,7 +6,7 @@ Este projeto utiliza um Raspberry Pi Pico para capturar sinais de áudio, proces
  ```
 git clone https://github.com/mborgerding/kissfft
 ```
-### ⚠️ O display OLED pode não inicializar corretamente na primeira execução. Caso isso ocorra, tente reiniciar o dispositivo ou executar outro código que utilize I2C antes.
+
 \
 \
 \
