@@ -40,7 +40,7 @@ void display_init(){
     gpio_pull_up(I2C_SCL);          // Habilita resistor pull-up no SCL
     
     ssd1306_init(&ssd, DISPLAY_WIDTH, DISPLAY_HEIGHT, false, endereco, I2C_PORT); // Inicializa display
-    ssd1306_fill(&ssd, false);      // Preenche o display com preto
+    ssd1306_config(&ssd); // Configura o display
     ssd1306_send_data(&ssd);        // Envia dados para o display
 
     // Limpa o display. O display inicia com todos os pixels apagados.
